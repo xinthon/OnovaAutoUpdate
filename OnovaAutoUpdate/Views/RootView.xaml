@@ -1,0 +1,29 @@
+﻿<Window
+    x:Class="OnovaAutoUpdate.Views.RootView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:converters="clr-namespace:OnovaAutoUpdate.Converters"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:OnovaAutoUpdate.Views"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
+    xmlns:s="https://github.com/canton7/Stylet"
+    xmlns:vm="clr-namespace:OnovaAutoUpdate.ViewModels"
+    Width="800"
+    Height="450"
+    mc:Ignorable="d"
+    Background="{DynamicResource MaterialDesignBackground}"
+    d:DataContext="{d:DesignInstance Type=vm:RootViewModel}"
+    Style="{DynamicResource MaterialDesignRoot}"
+    Title="RootView">
+    <md:DialogHost
+        x:Name="DialogHost"
+        Loaded="{s:Action OnViewFullyLoaded}"
+        SnackbarMessageQueue="{Binding Notifications}"
+        Style="{DynamicResource MaterialDesignEmbeddedDialogHost}">
+        <Grid IsEnabled="{Binding IsOpen, ElementName=DialogHost, Converter={x:Static converters:InverseBoolConverter.Instance}}">
+            <ContentControl s:View.Model="{Binding Dashboard}" />
+            <md:Snackbar MessageQueue="{Binding Notifications}" />
+        </Grid>
+    </md:DialogHost>
+</Window>
